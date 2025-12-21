@@ -17,7 +17,7 @@ def train():
     # 1. Initialize W&B
     # -----------------------------
     wandb.init(project="my_project", config={
-    "learning_rate": 0.001,
+    "learning_rate": 0.0005,
     "batch_size": 32,
     "epochs": 10
     })
