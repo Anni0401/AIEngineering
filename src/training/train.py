@@ -110,6 +110,8 @@ def train():
     # -----------------------------
     os.makedirs("models", exist_ok=True)
     torch.save(model.state_dict(), "models/mnist_cnn.pth")
+    os.makedirs("deployment", exist_ok=True)
+    torch.save(model.state_dict(), "deployment/mnist_cnn.pth")
 
 
 if __name__ == "__main__":
