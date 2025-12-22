@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from scipy.ndimage import rotate
 
 def normalize_images(x):
     """
@@ -35,6 +36,23 @@ def random_noise(image, noise_level=0.02):
     noise = np.random.normal(0, noise_level, image.shape)
     noisy_image = image + noise
     return np.clip(noisy_image, 0.0, 1.0)
+
+def random_rotation(image, max_angle=15):
+    """
+    Randomly rotates the image by an angle in degrees.
+    Rotation is applied around the image center.
+    """
+    angle = np.random.uniform(-max_angle, max_angle)
+    rotated = rotate(
+        image,
+        angle,
+        reshape=False,      # keep original shape
+        order=1,            # bilinear interpolation
+        mode="constant",    # fill empty space
+        cval=0.0            # background color (black)
+    )
+    return rotated
+
 def augment_dataset(x, y, augmentation_factor=1):
     """
     Augments dataset by creating new samples.
@@ -48,6 +66,7 @@ def augment_dataset(x, y, augmentation_factor=1):
 
         for _ in range(augmentation_factor):
             img_aug = random_shift(img)
+            img_aug = random_rotation(img_aug)
             img_aug = random_noise(img_aug)
             augmented_x.append(img_aug)
             augmented_y.append(label)
