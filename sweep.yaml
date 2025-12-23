@@ -9,7 +9,7 @@ parameters:
   learning_rate:
     values: [0.001, 0.0005]
   batch_size:
-    values: [32, 64]
+    values: [32, 64, 128]
   epochs:
-    value: 10
+    values: [10, 20]
 

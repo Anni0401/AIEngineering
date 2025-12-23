@@ -10,6 +10,7 @@ from src.training.engine import train_one_epoch, evaluate
 from src.utils.preprocessing import preprocess_pipeline
 from src.data.mnist_loader import MnistDataloader
 from os.path import join
+from sklearn.model_selection import train_test_split
 
 
 def train():
@@ -39,21 +40,31 @@ def train():
 
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
+    x_train, x_val, y_train, y_val = train_test_split(
+    x_train, y_train, test_size=0.1, random_state=42, shuffle=True
+    )
+
+
     # -----------------------------
     # 3. Preprocessing
     # -----------------------------
     x_train, y_train = preprocess_pipeline(
         x_train, y_train, augment=True
     )
+    x_val, y_val = preprocess_pipeline(
+        x_val, y_val, augment=True
+    )
     x_test, y_test = preprocess_pipeline(
         x_test, y_test, augment=False
     )
     x_train = torch.from_numpy(x_train).float()  
     y_train = torch.from_numpy(y_train).long()
+    x_val = torch.from_numpy(x_val).float()  
+    y_val = torch.from_numpy(y_val).long()
     x_test = torch.from_numpy(x_test).float()  
     y_test = torch.from_numpy(y_test).long()
     train_dataset = TensorDataset(x_train, y_train)
-    test_dataset = TensorDataset(x_test, y_test)
+    test_dataset = TensorDataset(x_val, y_val)
 
     train_loader = DataLoader(
         train_dataset,
