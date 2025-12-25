@@ -4,6 +4,7 @@ from src.models.cnn import MNISTCNN
 
 
 def load_model(model_path="mnist_cnn.pth", device="cpu"):
+    """ Loads the trained model from disk. """
     model = MNISTCNN()
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()

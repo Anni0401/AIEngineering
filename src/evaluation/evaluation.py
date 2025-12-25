@@ -1,11 +1,11 @@
 import torch
 import numpy as np
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-
 from src.models.cnn import MNISTCNN
 
 
 def evaluate_model(model, dataloader, device):
+    """ Evaluates the model on the given dataloader and returns metrics. """
     model.eval()
 
     all_preds = []

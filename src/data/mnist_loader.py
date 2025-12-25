@@ -22,6 +22,7 @@ class MnistDataloader:
         self.test_labels_filepath = test_labels_filepath
 
     def _read_images_labels(self, images_filepath, labels_filepath):
+        """ Reads images and labels from IDX files """
         # Read labels
         with open(labels_filepath, 'rb') as file:
             magic, size = struct.unpack(">II", file.read(8))
@@ -46,6 +47,8 @@ class MnistDataloader:
         return images, labels
 
     def load_data(self):
+        """ Loads and returns the MNIST dataset as tuples:
+            (x_train, y_train), (x_test, y_test)"""
         x_train, y_train = self._read_images_labels(
             self.training_images_filepath,
             self.training_labels_filepath

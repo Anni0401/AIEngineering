@@ -14,9 +14,10 @@ from sklearn.model_selection import train_test_split
 
 
 def train():
-    # -----------------------------
+    """ Main training function """
+
     # 1. Initialize W&B
-    # -----------------------------
+
     wandb.init(project="my_project", config={
     "learning_rate": 0.001,
     "batch_size": 64,
@@ -26,9 +27,9 @@ def train():
 
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-    # -----------------------------
+
     # 2. Load data
-    # -----------------------------
+
     input_path = "data"
 
     mnist = MnistDataloader(
@@ -44,10 +45,8 @@ def train():
     x_train, y_train, test_size=0.1, random_state=42, shuffle=True
     )
 
-
-    # -----------------------------
     # 3. Preprocessing
-    # -----------------------------
+
     x_train, y_train = preprocess_pipeline(
         x_train, y_train, augment=True
     )
@@ -77,9 +76,9 @@ def train():
         shuffle=False
     )
 
-    # -----------------------------
+
     # 4. Model
-    # -----------------------------
+
     model = MNISTCNN().to(DEVICE)
 
     criterion = torch.nn.CrossEntropyLoss()
@@ -90,9 +89,9 @@ def train():
 
     wandb.watch(model, log="all")
 
-    # -----------------------------
+
     # 5. Training loop
-    # -----------------------------
+ 
     for epoch in range(config.epochs):
         train_loss, train_acc = train_one_epoch(
             model, train_loader, optimizer, criterion, DEVICE
@@ -116,9 +115,8 @@ def train():
             f"Val Acc: {val_acc:.4f}"
         )
 
-    # -----------------------------
     # 6. Save model
-    # -----------------------------
+
     os.makedirs("models", exist_ok=True)
     torch.save(model.state_dict(), "models/mnist_cnn.pth")
     os.makedirs("deployment", exist_ok=True)

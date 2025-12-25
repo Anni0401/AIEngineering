@@ -3,6 +3,7 @@ import torch
 
 
 def train_one_epoch(model, dataloader, optimizer, criterion, device):
+    """ Trains the model for one epoch on the given dataloader. """
     model.train()
     total_loss = 0
     correct = 0
@@ -28,6 +29,7 @@ def train_one_epoch(model, dataloader, optimizer, criterion, device):
 
 
 def evaluate(model, dataloader, criterion, device):
+    """ Evaluates the model on the given dataloader. """
     model.eval()
     total_loss = 0
     correct = 0

@@ -6,7 +6,6 @@ api = HfApi()
 repo_id = "Anni0401/mnist-cnn"
 repo_type = "model"
 
-# Files to upload: (local_path, path_in_repo)
 files_to_upload = [
     ("deployment/mnist_cnn.pth", "mnist_cnn.pth"),
     ("src/models/cnn.py", "cnn.py"),
